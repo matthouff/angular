@@ -1,0 +1,38 @@
+@if(pokemon){
+<h1>{{pokemon.name}}</h1>
+<mat-card class="example-card">
+  <mat-card-content>
+    <img src={{pokemon.picture}} alt="Photo of a Shiba Inu">
+    <!-- Header row -->
+    <mat-list-item class="header">
+      <div class="listContent">
+        <div class="left">
+          <p>Nom</p>
+          <p>HP</p>
+          <p>CP</p>
+          <p>Type</p>
+          <p>Date de création</p>
+        </div>
+        <div class="right">
+          <p>{{ pokemon.name }}</p>
+          <p>{{ pokemon.hp }}</p>
+          <p>{{ pokemon.cp }}</p>
+          <div class="types">
+            @for(type of pokemon.types; track $index){
+            <span [style]="type | pokemonTypeColor">{{type}}</span>
+            }
+          </div>
+          <p>{{ pokemon.created | date: "dd/MM/YYYY" }}</p>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-card-content>
+  <mat-divider />
+  <mat-card-actions>
+    <button (click)="goToPokemonList()" mat-button>retour</button>
+  </mat-card-actions>
+</mat-card>
+}
+@else{
+<h1>Aucun pokémon à afficher !</h1>
+}
