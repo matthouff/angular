@@ -15,10 +15,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   ],
   imports: [
     BrowserModule,
+    PokemonModule,
     AppRoutingModule,
     RouterModule,
     MatToolbarModule,
-    PokemonModule,
   ],
   providers: [
     provideAnimationsAsync()
