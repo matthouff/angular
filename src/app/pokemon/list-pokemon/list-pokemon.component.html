@@ -17,9 +17,9 @@
 
         <div class="types">
           @for (type of pokemon.types; track $index) {
-          <span [style]="type | pokemonTypeColor">
+          <div class="chips" [style]="type | pokemonTypeColor">
             {{type}}
-          </span>
+          </div>
           }
         </div>
       </div>

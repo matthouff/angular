@@ -39,6 +39,10 @@ export class BorderCardDirective {
         return "#bfaa06";
       } else if (type === "Fée") {
         return "#de7edc";
+      } else if (type === "Combat") {
+        return "#ba1a1a";
+      } else if (type === "Psy") {
+        return "#8e4ace";
       } else if (type === "Normal") {
         return "#555555"
       } else {
