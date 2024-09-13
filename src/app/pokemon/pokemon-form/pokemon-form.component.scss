@@ -1,0 +1,50 @@
+form>button {
+  margin-top: 50px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+
+  .container-types {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+
+    &>* {
+      width: 100%;
+    }
+
+    .types-list-edit {
+      display: flex;
+      flex-direction: row;
+
+      .chips {
+        position: relative;
+      }
+
+      button {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        border-radius: 50px;
+        border: 1px solid #0008;
+        background-color: #ffffff;
+      }
+    }
+  }
+}
+
+mat-form-field div:last-child,
+mat-form-field div:last-child::before {
+  height: 0;
+}
+
+mat-form-field.ng-valid[required] {
+  border-left: 5px solid green;
+}
+
+.message-error {
+  color: #ba1a1a;
+}

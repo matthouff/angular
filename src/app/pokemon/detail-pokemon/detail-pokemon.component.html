@@ -19,7 +19,7 @@
           <p>{{ pokemon.cp }}</p>
           <div class="types">
             @for(type of pokemon.types; track $index){
-            <span [style]="type | pokemonTypeColor">{{type}}</span>
+            <div class="chips" [style]="type | pokemonTypeColor">{{type}}</div>
             }
           </div>
           <p>{{ pokemon.created | date: "dd/MM/YYYY" }}</p>
@@ -30,6 +30,7 @@
   <mat-divider />
   <mat-card-actions>
     <button (click)="goToPokemonList()" mat-button>retour</button>
+    <button (click)="goToEdit()" mat-button>Modifier</button>
   </mat-card-actions>
 </mat-card>
 }

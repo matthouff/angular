@@ -1,4 +1,13 @@
-mat-toolbar a {
-  text-decoration: none;
-  color: #000;
+mat-toolbar {
+  margin-bottom: 50px;
+
+  a {
+    text-decoration: none;
+    color: #000;
+  }
+
+}
+
+.global-component {
+  padding-bottom: 50px;
 }

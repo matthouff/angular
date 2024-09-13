@@ -1,0 +1,61 @@
+@if (pokemon) {
+<!-- #pokemonForm="ngForm" permet de définir une variable utilisable dans le fichier et non un id de l'élément -->
+<form (ngSubmit)="onSubmit()" #pokemonForm="ngForm">
+  <div class="form-container">
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <!-- [(ngModel)] permet de récupérer les infors du champs et en recevoir (bidirectionnel) -->
+      <input matInput required pattern="^[a-zA-Zàéèç]{1,25}$" [(ngModel)]="pokemon.name" name="name" #name="ngModel">
+      <!-- Si le champ est valid ou pas encore touché/bougé par l'utilisateur -->
+      <mat-hint class="message-error" [hidden]="name.valid || name.pristine">Le nom du pokémon est requis
+        (1-25)</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Points de vie</mat-label>
+      <input matInput type="number" required pattern="^[0-9]{1,3}$" [(ngModel)]="pokemon.hp" name="hp" #hp="ngModel">
+      <mat-hint class="message-error" [hidden]="hp.valid || hp.pristine">Les points de vies sont requis
+        (1-999)</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Point de dégâts</mat-label>
+      <input matInput type="number" required pattern="^[0-9]{1,2}$" [(ngModel)]="pokemon.cp" name="cp" #cp="ngModel">
+      <mat-hint class="message-error" [hidden]="cp.valid || cp.pristine">Les points de dégâts sont requis
+        (1-99)</mat-hint>
+    </mat-form-field>
+
+    <div class="container-types">
+      <mat-label>Les types de {{pokemon.name}}</mat-label>
+      <div class="types types-list-edit">
+        @for (type of pokemon.types; track $index) {
+        <div class="chips" [attr.for]="type" [style]="type | pokemonTypeColor">
+          {{type}}
+          <button type="button" *ngIf="pokemon.types.length > 1" style="cursor: pointer;" (click)="removeType(type)">
+            x
+          </button>
+        </div>
+        }
+      </div>
+      <mat-divider style="margin-bottom: 10px;" />
+      <div class="types">
+        @for (type of types; track $index) {
+        <div *ngIf="!hasType(type)">
+          <button type="button" style="cursor: pointer;" (click)="selectType(type)" class="chips" [attr.for]="type"
+            [style]="isTypeValid(type) ? (type | pokemonTypeColor): 'background-color: grey; opacity: 0.3; cursor: default;'">
+            {{type}}
+          </button>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  <button mat-flat-button type="submit" [disabled]="!pokemonForm.form.valid">Modifier</button>
+  <p [hidden]="pokemonForm.form.valid" style="color: #ba1a1a; font-size: 14px;">
+    Des champs ne sont pas valides
+  </p>
+</form>
+}
+@else {
+<h3>Il n'y a aucun pokémon à éditer</h3>
+}
