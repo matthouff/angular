@@ -22,7 +22,7 @@ export class DetailPokemonComponent implements OnInit {
     // Récupérer les paramètres de l'url (:id) défini dans les routes "app.routes.ts"
     const pokemonId: string | null = this.router.snapshot.paramMap.get('id');
     if (pokemonId) {
-      this.pokemon = this.pokemonService.getPokemonById(+pokemonId)
+      this.pokemonService.getPokemonById(+pokemonId).subscribe(pokemon => this.pokemon = pokemon)
     }
   }
 

@@ -9,7 +9,7 @@ import { PokemonService } from '../pokemon.service';
   styleUrl: './list-pokemon.component.scss'
 })
 export class ListPokemonComponent implements OnInit {
-  pokemons: Pokemon[] | undefined;
+  pokemons: Pokemon[];
 
   constructor(
     private pokemonService: PokemonService,
@@ -17,7 +17,8 @@ export class ListPokemonComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.pokemons = this.pokemonService.getPokemonList();
+    this.pokemonService.getPokemonList()
+      .subscribe(pokemonList => this.pokemons = pokemonList); // On récupère la pokemonList de l'api grace à l'observable avec subscribe et on l'attribut à pokemons
   }
 
   goToPokemon(id: number) {

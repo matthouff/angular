@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Pokemon } from './pokemon';
-import { POKEMONS } from '../mock/mock-pokemon-list';
+import { HttpClient } from '@angular/common/http';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 @Injectable(
   // {
@@ -9,12 +10,32 @@ import { POKEMONS } from '../mock/mock-pokemon-list';
 )
 export class PokemonService {
 
-  getPokemonList(): Pokemon[] {
-    return POKEMONS;
+  constructor(private http: HttpClient) { }
+
+  private log(response: Pokemon[] | Pokemon | undefined) {
+    console.table(response);
+  }
+  private handleError(error: Error, errorValue: any) {
+    console.error(error);
+    return of(errorValue); // of transforme une donnée simple en un flux de donnée (Observable) qui emmet la donnée en paramètre (errorValue)
   }
 
-  getPokemonById(pokemonId: number): Pokemon | undefined {
-    return POKEMONS.find(pokemon => pokemon.id == pokemonId);
+  // Observable permet les requêtes asynchrones et facilite les appels et traitements
+  getPokemonList(): Observable<Pokemon[]> {
+    // return POKEMONS;
+    return this.http.get<Pokemon[]>("api/pokemons").pipe(
+      tap((resPokemonList) => this.log(resPokemonList)), // tap est comme un gros console log mais pour les requêtes
+      catchError((error) => this.handleError(error, []))
+    );
+  }
+
+  getPokemonById(pokemonId: number): Observable<Pokemon | undefined> {
+    // return POKEMONS.find(pokemon => pokemon.id == pokemonId);
+
+    return this.http.get<Pokemon>(`api/pokemons/${pokemonId}`).pipe(
+      tap((resPokemon) => this.log(resPokemon)),
+      catchError((error) => this.handleError(error, undefined))
+    );
   }
 
   getPokemonTypeList(): string[] {
