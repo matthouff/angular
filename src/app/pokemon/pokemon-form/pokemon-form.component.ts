@@ -12,9 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class PokemonFormComponent implements OnInit {
 
   @Input() pokemon: Pokemon;
-
   types: string[];
-
+  isAddForm: boolean;
 
   constructor(
     private pokemonService: PokemonService,
@@ -23,6 +22,7 @@ export class PokemonFormComponent implements OnInit {
 
   ngOnInit() {
     this.types = this.pokemonService.getPokemonTypeList();
+    this.isAddForm = this.route.url.includes("add");
   }
 
   hasType(type: string): boolean {
@@ -40,9 +40,23 @@ export class PokemonFormComponent implements OnInit {
     this.pokemon.types.splice(index, 1)
   }
 
+  handleChangeImage(pokemonNumber: any): void {
+    this.pokemon.picture = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pokemonNumber.viewModel}.png`
+  }
+
   onSubmit() {
-    console.log('Submit form');
-    this.route.navigate(["/pokemon", this.pokemon.id]);
+    if (this.isAddForm) {
+      this.pokemonService.addPokemon(this.pokemon)
+        .subscribe((pokemon: Pokemon) => {
+          this.route.navigate(["/pokemon", pokemon.id])
+        });
+    } else {
+      // Le pokémon est bindé (@Input) ce qui fait que les modifications sont bien enregistrés lors de changement du formulaire
+      this.pokemonService.updatePokemon(this.pokemon)
+        .subscribe(() => {
+          this.route.navigate(["/pokemon", this.pokemon.id])
+        });
+    }
   }
 
   isTypeValid(type: string): boolean {

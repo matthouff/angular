@@ -21,6 +21,10 @@ export class ListPokemonComponent implements OnInit {
       .subscribe(pokemonList => this.pokemons = pokemonList); // On récupère la pokemonList de l'api grace à l'observable avec subscribe et on l'attribut à pokemons
   }
 
+  goToAddForm() {
+    this.route.navigate(["/add/pokemon"])
+  }
+
   goToPokemon(id: number) {
     this.route.navigate(["/pokemon/", id]);
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Pokemon } from './pokemon';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, of, tap } from 'rxjs';
 
 @Injectable(
@@ -12,7 +12,7 @@ export class PokemonService {
 
   constructor(private http: HttpClient) { }
 
-  private log(response: Pokemon[] | Pokemon | undefined) {
+  private log(response: any) {
     console.table(response);
   }
   private handleError(error: Error, errorValue: any) {
@@ -20,6 +20,7 @@ export class PokemonService {
     return of(errorValue); // of transforme une donnée simple en un flux de donnée (Observable) qui emmet la donnée en paramètre (errorValue)
   }
 
+  // Récupérer une liste de pokémon
   // Observable permet les requêtes asynchrones et facilite les appels et traitements
   getPokemonList(): Observable<Pokemon[]> {
     // return POKEMONS;
@@ -29,6 +30,7 @@ export class PokemonService {
     );
   }
 
+  // Récupérer un pokémon
   getPokemonById(pokemonId: number): Observable<Pokemon | undefined> {
     // return POKEMONS.find(pokemon => pokemon.id == pokemonId);
 
@@ -36,6 +38,37 @@ export class PokemonService {
       tap((resPokemon) => this.log(resPokemon)),
       catchError((error) => this.handleError(error, undefined))
     );
+  }
+
+  // Modifier un Pokémon  --  Retourne null parce que la simulation d'api est comme ça mais normalement ça renvoie Pokemon | undefined dans l'observable
+  updatePokemon(pokemon: Pokemon): Observable<null> {
+    const httpOptions = {
+      headers: new HttpHeaders({ "Content-Type": "application/json" })
+    }
+
+    return this.http.put(`api/pokemons`, pokemon, httpOptions).pipe(
+      tap((res) => this.log(res)),
+      catchError((error) => this.handleError(error, null))
+    )
+  }
+
+  deletePokemonById(pokemonId: number): Observable<null> {
+    return this.http.delete(`api/pokemons/${pokemonId}`).pipe(
+      tap((res) => this.log(res)),
+      catchError((error) => this.handleError(error, null))
+    )
+  }
+
+  // Modifier un Pokémon  --  Retourne null parce que la simulation d'api est comme ça mais normalement ça renvoie Pokemon | undefined dans l'observable
+  addPokemon(pokemon: Pokemon): Observable<Pokemon> {
+    const httpOptions = {
+      headers: new HttpHeaders({ "Content-Type": "application/json" })
+    }
+
+    return this.http.post<Pokemon>(`api/pokemons`, pokemon, httpOptions).pipe(
+      tap((res) => this.log(res)),
+      catchError((error) => this.handleError(error, null))
+    )
   }
 
   getPokemonTypeList(): string[] {

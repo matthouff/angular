@@ -3,6 +3,12 @@ h1 {
   font-size: 60px;
 }
 
+button {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+}
+
 .conteneur {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
