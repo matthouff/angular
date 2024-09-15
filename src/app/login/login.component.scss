@@ -1,0 +1,28 @@
+mat-card.container {
+  display: flex;
+  text-align: center;
+  width: 30%;
+  padding: 50px;
+  margin: auto;
+  height: 100%;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    h1 {
+      font-size: 40px;
+      margin: 0;
+    }
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    button {
+      align-self: flex-end;
+    }
+  }
+
+}

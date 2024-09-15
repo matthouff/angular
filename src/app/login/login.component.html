@@ -1,0 +1,26 @@
+<mat-card class="container">
+  <form>
+    <div class="form-title">
+      <h1>Connexion</h1>
+      <em>{{message}}</em>
+    </div>
+
+    <div class="fields">
+      <mat-form-field appearance="outline">
+        <mat-label>Nom</mat-label>
+        <input matInput type="text" [(ngModel)]="name" name="name" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password" required />
+        <button mat-icon-button type="button" matSuffix (click)="handleHide()" [attr.aria-label]="'Hide password'">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </div>
+    <button mat-flat-button (click)="login()" *ngIf="!auth.isLoggedIn">
+      Se connecter
+    </button>
+  </form>
+</mat-card>

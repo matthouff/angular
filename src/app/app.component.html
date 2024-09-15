@@ -2,6 +2,9 @@
   <a href="#">
     Pokédex
   </a>
+  <button mat-stroked-button (click)="logout()" *ngIf="auth.isLoggedIn">
+    Se connecter
+  </button>
 </mat-toolbar>
 
 <div class="global-component">
