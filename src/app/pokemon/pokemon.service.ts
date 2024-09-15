@@ -40,6 +40,17 @@ export class PokemonService {
     );
   }
 
+  searchPokemonList(term: string): Observable<Pokemon[]> {
+    if (term.length <= 1) {
+      return of([]) // of retourne la valeur sous forme d'un flux
+    }
+
+    return this.http.get<Pokemon[]>(`api/pokemons/?name=${term}`).pipe(
+      tap((resPokemonFiltred) => this.log(resPokemonFiltred)),
+      catchError((error) => this.handleError(error, []))
+    );
+  }
+
   // Modifier un Pokémon  --  Retourne null parce que la simulation d'api est comme ça mais normalement ça renvoie Pokemon | undefined dans l'observable
   updatePokemon(pokemon: Pokemon): Observable<null> {
     const httpOptions = {

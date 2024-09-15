@@ -4,6 +4,7 @@
 } -->
 <button (click)="goToAddForm()" mat-flat-button>Ajouter un pokemon</button>
 <h1>Pokédex</h1>
+<app-search-pokemon />
 <div class="conteneur">
   @for (pokemon of pokemons; track $index) {
   <div (click)="goToPokemon(pokemon.id)" class="degrade" pkmnBorderCard [hoverColor]="pokemon.types">

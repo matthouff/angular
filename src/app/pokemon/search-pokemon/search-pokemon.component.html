@@ -1,0 +1,15 @@
+<div>
+  <mat-form-field appearance="outline">
+    <mat-label>Rechercher un pokemon</mat-label>
+    <input matInput #searchBox (keyup)="search(searchBox.value)">
+  </mat-form-field>
+
+  <mat-list *ngIf="searchBox.value" role="list">
+    <a class="test" *ngFor="let pokemon of pokemons$ | async" (click)="goToDetails(pokemon)">
+      <mat-list-item role="listitem">
+        {{pokemon.name}}
+      </mat-list-item>
+      <mat-divider />
+    </a>
+  </mat-list>
+</div>
